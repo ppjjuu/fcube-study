@@ -14,25 +14,21 @@ public class LogReader {
 		try {
 			LogStream ls = new LogStream(p);
 			
-			OutputStreamWriter osw = new OutputStreamWriter(p.getOutputStream());
-			BufferedWriter bw = new BufferedWriter(osw);
+			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
 			
 			bw.write("ping");
+			bw.write(13);
 			bw.newLine();
 			bw.flush();
-			bw.write(13);
-			bw.flush();
 
-			Thread t = new Thread(ls);
-			t.start();
+//			Thread t = new Thread(ls);
+//			t.start();
 			
-			synchronized (t) {
-				t.wait();
-			}
+			do{
+				System.out.println(br.readLine());
+			}while(br.ready());
 			
-//			do{
-//				System.out.println(br.readLine());
-//			}while(br.ready());
 			System.out.println("---ee-e-e-e");
 			
 //			ls.setExecute(false);
