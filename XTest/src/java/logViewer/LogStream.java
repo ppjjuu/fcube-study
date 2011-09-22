@@ -16,7 +16,6 @@ public class LogStream implements Runnable{
 	public void run(){
 		execute = true;
 		try{
-			System.out.println("--------");
 			do{
 				System.out.println(br.readLine());
 			}while(br.ready() && execute);
