@@ -1,5 +1,6 @@
 package logCopy;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -13,12 +14,14 @@ public class LogFileWriter implements Runnable {
 	private FileOutputStream dist = null;
 	private PrintStream ps = null;
 	private File logFile = null;
+	private BufferedInputStream buffInput = null;
 
 	// Constructor 입출력 스트림을 받아서 처리한다.
 	public LogFileWriter(InputStream input, OutputStream output, File logFile) throws Exception {
 		this.logFile = logFile;
 		this.input = input;
 		this.output = output;
+		this.buffInput = new BufferedInputStream(input);
 	}
 
 	public void run() {

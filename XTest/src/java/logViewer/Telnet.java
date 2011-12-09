@@ -12,6 +12,8 @@ package logViewer;
 
 //라이브러리 이용
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -199,44 +201,38 @@ class LogFileWriter implements Runnable {
 			dist = new FileOutputStream(logFile, true);
 			ps = new PrintStream(dist);
 			while (true) {
-				try {
-					int n = src.read(buff);
-					if (n > 0) {
-						ps.write(buff, 0, n);
-						
-						String str = new String(buff).trim();
-						
-						if (str.lastIndexOf("ogin:") == 1) {
-							System.out.println("Login !!");
-							serverOut.write("devu01\n".getBytes());
-						} else if (str.lastIndexOf("assword:") == 1) {
-							System.out.println("Password !!");
-							serverOut.write("devu01\n".getBytes());
-						} else if (str.lastIndexOf("/data]") > 0) {
-							System.out.println("Change Path !!" + "[" + str.substring(str.length()-20)
-									+ "]" + str.length() + " "
-									+ str.lastIndexOf("/data]"));
-							serverOut
-									.write("cd logs/jeus6mis/live.logs/users/95031\n"
-											.getBytes());
-							serverOut
-									.write("tail -100f user.log\n".getBytes());
-						}
-					}
+				int n = src.read(buff);
+				if (n > 0) {
+					ps.write(buff, 0, n);
 
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.err.print(e);
-					System.exit(1);
+					String str = new String(buff).trim();
+
+					if (str.lastIndexOf("ogin:") == 1) {
+						System.out.println("Login !!");
+						serverOut.write("devu01\n".getBytes());
+					} else if (str.lastIndexOf("assword:") == 1) {
+						System.out.println("Password !!");
+						serverOut.write("devu01\n".getBytes());
+					} else if (str.lastIndexOf("/data]") > 0) {
+						System.out.println("Change Path !!" + "["
+								+ str.substring(str.length() - 20) + "]"
+								+ str.length() + " "
+								+ str.lastIndexOf("/data]"));
+						serverOut
+								.write("cd logs/jeus6mis/live.logs/users/95031\n"
+										.getBytes());
+						serverOut.write("tail -100f user.log\n".getBytes());
+					}
 				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ps.close();
-			try{
+			try {
 				dist.close();
-			}catch(IOException e){
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}

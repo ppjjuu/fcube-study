@@ -33,7 +33,7 @@ public class IOTest {
 
 				file.createNewFile();
 
-				System.out.println("颇老 积己 己傍~せ");
+				System.out.println("Create File~");
 			} catch (Exception e) {
 				// TODO: handle exception
 				System.out.println("IO Exceiption!");
