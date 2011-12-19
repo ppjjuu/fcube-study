@@ -12,18 +12,49 @@ public class DotFile implements Serializable {
 	private byte[] dataArray;
 	private int dataSize;
 	private String hashCode;
+	private int splitNumber;
+	private boolean lastFile;
 	
-	public DotFile(){
-		dataArray = new byte[SPLIT_SIZE];
-		
+	public DotFile(int splitNumber, byte[] dataArray, int dataSize, boolean isLast) throws Exception{
+		this.dataArray = new byte[SPLIT_SIZE];
+		this.dataArray = dataArray.clone();
+		this.splitNumber = splitNumber;
+		this.dataSize = dataSize;
+		this.hashCode = setHashCode();
+		this.lastFile = isLast;
 	}
 	
-	private String getHashCode() throws Exception{
+	private String setHashCode() throws Exception{
 		ByteArrayInputStream bais = new ByteArrayInputStream(dataArray,0,dataSize);
-		return HashUtil.calculateHash(MessageDigest.getInstance("MD5"), bais);
+//		return HashUtil.calculateHash(MessageDigest.getInstance("MD5"), bais);
+		return HashUtil.calculateHash(new MD4(), bais);
+	}
+	
+	public String getHashCode(){
+		return this.hashCode;
+	}
+	
+	public int getSplitNumber(){
+		return this.splitNumber;
+	}
+	
+	public int getDataSize(){
+		return this.dataSize;
 	}
 	
 	private boolean checkData() throws Exception{
-		return hashCode.equals(getHashCode());
+		return hashCode.equals(setHashCode());
+	}
+	
+	public byte[] getDataArray() throws Exception{
+		if(checkData()){
+			return dataArray;
+		}else{
+			throw new Exception("Data Broken Error!");
+		}
+	}
+	
+	public boolean isLastFile(){
+		return lastFile;
 	}
 }
