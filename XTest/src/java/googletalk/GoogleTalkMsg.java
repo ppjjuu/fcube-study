@@ -1,3 +1,4 @@
+package googletalk;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.MessageListener;
@@ -30,7 +31,7 @@ public class GoogleTalkMsg {
  
         try {
             Message message = new Message("ppjjuu@gmail.com", Type.chat);
-            message.addBody("ko", "메세지 잘 가냐?!!!!! ");
+            message.addBody("ko", "Hello. 가나다라..");
             newChat.sendMessage(message);
         } catch (XMPPException e) {
             throw new XMPPException(e);
