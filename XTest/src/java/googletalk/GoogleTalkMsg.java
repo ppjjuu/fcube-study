@@ -16,7 +16,7 @@ public class GoogleTalkMsg {
         // 구글 톡 서버에 접속
         connection.connect();
         // 로그인.
-        connection.login("fcube.server@gmail.com", "");
+        connection.login("fcube.server@gmail.com", "wlsdjr2011");
  
         // 상태를 활성화로 바꾸어 준다.
         Presence presence = new Presence(Presence.Type.available);
