@@ -9,7 +9,8 @@ public class ClassCall {
 
 	public static void main(String[] args) throws Exception {
 
-		File dir = new File(new URI("file:///d:/"));
+//		File dir = new File(new URI("file:///d:/"));
+		File dir = new File(new URI("file:///home/"));
 
 		ClassCall.printFileList(System.out, dir, 0);
 	}
